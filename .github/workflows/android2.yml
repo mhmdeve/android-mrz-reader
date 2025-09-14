@@ -14,12 +14,17 @@ jobs:
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting (sonarqube)
           fetch-depth: 0
-      - name: set up JDK 11
+
+      # Use JDK 17 instead of 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v3.13.0
         with:
           distribution: 'zulu'
-          java-version: 11
-      - name: run unitTest and generate jacoco report
+          java-version: 17
+
+      - name: Run unit tests and generate JaCoCo report
         run: ./gradlew lintDebug testDebugUnitTest jacocoTestDebugUnitTestReport
-      - name: Sonarqube
-        run: ./gradlew sonarqube
+
+      # Use 'sonar' instead of deprecated 'sonarqube'
+      - name: SonarQube analysis
+        run: ./gradlew sonar
